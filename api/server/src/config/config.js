@@ -1,9 +1,7 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
+const dotenv = require('dotenv').config();
 
 
-const config = {
+module.exports = {
 
   // If using onine database
   // development: {
@@ -11,7 +9,6 @@ const config = {
   // },   
 
   development: {
-    use_env_variable: 'DATABASE_URL_DEV',
     username: process.env.DB_USER_DEV,
     password: process.env.DB_PASSWORD_DEV,
     database: process.env.DB_NAME_DEV,
@@ -40,5 +37,3 @@ const config = {
     seederStorage: 'sequelize'
   }
 };
-
-module.exports = config;
