@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'SET NULL'
     },
     childId: {
-      type: Datatypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'Children',
@@ -31,12 +31,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     createdAt: {
       type: 'TIMESTAMP',
-      defaultValue: DataTypes.literal('CURRENT_TIMESTAMP'),
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: false
     },
     updatedAt: {
       type: 'TIMESTAMP',
-      defaultValue: DataTypes.literal('CURRENT_TIMESTAMP'),
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: false
     }
   }, {});

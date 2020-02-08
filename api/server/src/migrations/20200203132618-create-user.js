@@ -28,16 +28,12 @@ module.exports = {
       },
       username: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       email: {
         type: Sequelize.STRING,
         allowNull: true,
         unique: true
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: true
       },
       phone: {
         type: Sequelize.STRING,

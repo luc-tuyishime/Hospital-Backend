@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Child.associate = function (models) {
     // associations can be defined here
-    Parent.belongsTo(models.User, { foreignKey: 'userId' });
+    Child.belongsTo(models.User, { foreignKey: 'userId' });
     Child.belongsToMany(models.Parent, {
       through: 'ChildParents',
       as: 'parents',
