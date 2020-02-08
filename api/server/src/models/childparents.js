@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     childId: {
-      type: Datatypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'Childs',
