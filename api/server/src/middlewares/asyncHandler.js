@@ -4,7 +4,8 @@ const asyncHandler = controller => async (req, res, next) => {
     try {
         await controller(req, res, next);
     } catch (err) {
-        return res.status(status.SERVER_ERROR).json({ errors: { message: err.message } });
+        // return res.status(status.SERVER_ERROR).json({ errors: { message: err.message } });
+        console.log(err)
     }
 };
 

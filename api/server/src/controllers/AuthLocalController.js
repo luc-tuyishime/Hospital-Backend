@@ -1,8 +1,8 @@
 import 'dotenv/config';
-import { Hospital } from '../queries';
+import db from '../models';
 import * as helper from '../helpers';
 import status from '../config/status';
-
+import * as dbHelper from '../helpers/dbQueries';
 
 /**
  * A class to handle user local authentication
@@ -17,7 +17,7 @@ export default class AuthLocalController {
     static async signup(req, res) {
         const { name, email } = req.body;
         req.body.password = helper.password.hash(req.body.password);
-        const newHospital = await Hospital.create(req.body);
+        const newHospital = await dbHelper.createOne({ model: db.Hospital, data: req.body });
         const errors = newHospital.errors ? helper.checkCreateUpdateHospitalErrors(newHospital.errors) : null;
 
         return errors
@@ -27,6 +27,37 @@ export default class AuthLocalController {
                 message: 'hospital created..',
                 user: newHospital
             });
+    }
+
+    /**
+ * @description - login user function
+ * @param {object} req user request
+ * @param {object} res  response form server
+ * @returns {object} user token
+ */
+    static async login(req, res) {
+        const { email, password } = req.body;
+        const checkHospital = await dbHelper.findOne({ model: db.Hospital, where: { email } });
+        if (checkHospital) {
+            const comparePassword = helper.password.compare(password, checkHospital.password || '');
+            if (!comparePassword) {
+                return res.status(status.UNAUTHORIZED).json({
+                    errors: { credentials: 'The credentials you provided are incorrect' }
+                });
+            }
+            const payload = {
+                id: checkHospital.id
+            };
+            delete checkHospital.password;
+            return res.status(status.OK).json({
+                message: 'signIn successfully',
+                user: checkHospital,
+                token: helper.token.generate(payload)
+            });
+        }
+        return res.status(status.UNAUTHORIZED).json({
+            errors: { credentials: 'The credentials you provided are incorrect' }
+        });
     }
 
 }
