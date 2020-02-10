@@ -1,0 +1,10 @@
+version: '2'
+plugins:
+  rubocop:
+    enabled: true
+exclude_patterns:
+- "api/server/src/config/"
+- "api/server/src/models/"
+- "api/server/src/migrations/"
+- "**/node_modules/"
+
