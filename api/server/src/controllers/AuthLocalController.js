@@ -5,14 +5,14 @@ import status from '../config/status';
 import * as dbHelper from '../helpers/dbQueries';
 
 /**
- * A class to handle user local authentication
+ * A class to handle Hospital local authentication
  */
 export default class AuthLocalController {
     /**
-     * @description user signup function
+     * @description Hospital signup function
      * @param {object} req request from user
      * @param {object} res response from server
-     * @return {object} user information & token
+     * @return {object} Hospital information & token
      */
     static async signup(req, res) {
         const { name, email } = req.body;
@@ -30,10 +30,10 @@ export default class AuthLocalController {
     }
 
     /**
- * @description - login user function
+ * @description - login Hospital function
  * @param {object} req user request
  * @param {object} res  response form server
- * @returns {object} user token
+ * @returns {object} Hospital token
  */
     static async login(req, res) {
         const { email, password } = req.body;
