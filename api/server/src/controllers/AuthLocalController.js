@@ -10,7 +10,7 @@ import * as dbHelper from '../helpers/dbQueries';
 export default class AuthLocalController {
     /**
      * @description Hospital signup function
-     * @param {object} req request from user
+     * @param {object} req request from hospital
      * @param {object} res response from server
      * @return {object} Hospital information & token
      */
@@ -18,7 +18,7 @@ export default class AuthLocalController {
         const { name, email } = req.body;
         req.body.password = helper.password.hash(req.body.password);
         const newHospital = await dbHelper.createOne({ model: db.Hospital, data: req.body });
-        const errors = newHospital.errors ? helper.checkCreateUpdateHospitalErrors(newHospital.errors) : null;
+        const errors = newHospital.errors ? helper.checkCreateUpdateErrors(newHospital.errors) : null;
 
         return errors
             ? res.status(errors.code).json({ errors: errors.errors })
