@@ -15,6 +15,14 @@ export default (err = {}) => {
             errors.name = 'name already used';
         }
 
+        if (err.fields.username) {
+            errors.username = 'username already exist'
+        }
+
+        if (err.fields.phone) {
+            errors.phone = 'Phone already used';
+        }
+
         return { errors, code: status.EXIST };
     }
     return {

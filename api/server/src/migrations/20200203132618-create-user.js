@@ -28,7 +28,8 @@ module.exports = {
       },
       username: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        unique: true
       },
       email: {
         type: Sequelize.STRING,
@@ -37,7 +38,8 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        unique: true
       },
       createdAt: {
         allowNull: false,
