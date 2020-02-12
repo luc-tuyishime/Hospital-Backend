@@ -12,7 +12,7 @@ class users {
      * @returns {object} Object representing the response returned
      */
     static create(req, res, next) {
-        const result = validate.validation.userOrParent(req.body);
+        const result = validate.validation.child(req.body);
         if (result.error) {
             return Error.joiErrorHandler(res, result);
         }

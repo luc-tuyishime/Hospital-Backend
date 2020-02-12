@@ -4,7 +4,6 @@ export const findOne = async ({ model, where = {}, include }) => {
         where,
         include,
     });
-
     return result && result.get() ? result : null;
 };
 

@@ -18,6 +18,13 @@ export default (input) => {
             .min(5)
             .max(100)
             .required(),
+        password: Joi.string()
+            .min(8)
+            .max(100)
+            .required(),
+        role: Joi.string()
+            .min(5)
+            .max(100),
         phone: Joi.string()
             .regex(/^\+\d{1,12}$/)
             .required()

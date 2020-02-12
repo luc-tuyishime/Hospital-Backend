@@ -31,7 +31,7 @@ module.exports = {
         allowNull: false
       },
       sex: {
-        type: Sequelize.ENUM('masculine', 'feminine'),
+        type: Sequelize.STRING,
         allowNull: false
       },
       createdAt: {

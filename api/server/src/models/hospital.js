@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   Hospital.associate = (models) => {
     // associations can be defined here
     Hospital.hasMany(models.User, {
-      foreignKey: 'userId',
+      foreignKey: 'hospitalId',
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE'
     });

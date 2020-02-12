@@ -23,6 +23,7 @@ export default async (req, res, next) => {
         return res.status(status.UNAUTHORIZED).json({ errors: { token: 'This token is invalid' } });
     }
 
+    req.hospital = decodedToken;
     req.user = decodedToken;
 
     return next();
