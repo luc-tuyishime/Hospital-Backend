@@ -7,23 +7,23 @@ import * as dbHelper from '../helpers/dbQueries';
 /**
  * A class to handle actions performed on Users 
  */
-export default class UserLocalController {
+export default class ChildController {
     /**
    * @param {object} req Request sent to the route
    * @param {object} res Response from server
    * @returns {object} Object representing the response returned
    */
     static async create(req, res) {
-        const hospitalId = req.user.id;
-        const { firstName, lastName, username, email, phone } = req.body;
-        const newUser = await dbHelper.createOne({ model: db.User, data: { hospitalId, firstName, lastName, username, email, phone } });
-        const errors = newUser.errors ? helper.checkCreateUpdateErrors(newUser.errors) : null;
+        const { firstName, lastName, birth, sex } = req.body;
+        const userId = req.user.id
+        const newChild = await dbHelper.createOne({ model: db.Child, data: { userId, firstName, lastName, birth, sex } });
+        const errors = newChild.errors ? helper.checkCreateUpdateErrors(newChild.errors) : null;
 
         return errors
             ? res.status(errors.code).json({ errors: errors.errors })
             : res.status(status.CREATED).json({
-                message: 'user created..',
-                user: newUser
+                message: 'child created..',
+                child: newChild
             });
     }
 }
