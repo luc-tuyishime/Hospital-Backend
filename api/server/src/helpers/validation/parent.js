@@ -10,13 +10,13 @@ export default (input) => {
             .min(5)
             .max(255)
             .required(),
-        birth: Joi.date()
-            .iso()
+        email: Joi.string()
+            .min(5)
+            .max(100)
             .required(),
-        sex: Joi.string()
-            .min(4)
-            .max(6),
-        parentId: Joi.number().required()
+        phone: Joi.string()
+            .regex(/^\+\d{1,12}$/)
+            .required()
     });
 
     return Joi.validate(input, schema, { abortEarly: false });

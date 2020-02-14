@@ -14,16 +14,24 @@ export default class ChildController {
    * @returns {object} Object representing the response returned
    */
     static async create(req, res) {
-        const { firstName, lastName, birth, sex } = req.body;
+        const { firstName, lastName, birth, sex, parentId } = req.body;
         const userId = req.user.id
-        const newChild = await dbHelper.createOne({ model: db.Child, data: { userId, firstName, lastName, birth, sex } });
-        const errors = newChild.errors ? helper.checkCreateUpdateErrors(newChild.errors) : null;
+        const newChild = await dbHelper.createOne({
+            model: db.Child, data: { userId, firstName, lastName, birth, sex }
+        });
+        let childParent = await dbHelper.createOne({
+            model: db.ChildParents, data: { parentId, childId: newChild.id }
+        });
 
-        return errors
-            ? res.status(errors.code).json({ errors: errors.errors })
-            : res.status(status.CREATED).json({
-                message: 'child created..',
-                child: newChild
-            });
+        if (childParent.errors) {
+            return res.status(status.NOT_FOUND).json({
+                message: `The parent with id ${parentId} doesn't exist`
+            })
+        }
+
+        return res.status(status.CREATED).json({
+            newChild: newChild,
+            childParent: childParent
+        });
     }
 }

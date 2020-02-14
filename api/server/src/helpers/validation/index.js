@@ -4,8 +4,10 @@ import password from './password';
 import name from './name';
 import userOrParent from './userOrParent';
 import child from './child';
+import parent from './parent';
 
 
 export {
-    newUser, email, password, name, userOrParent, child
+    newUser, email, password, name,
+    userOrParent, child, parent
 };
