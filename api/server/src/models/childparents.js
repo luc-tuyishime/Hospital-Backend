@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Parents',
+        model: 'Parent',
         key: 'id'
       }
     },
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Childs',
+        model: 'Child',
         key: 'id'
       }
     },
@@ -32,6 +32,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     }
   }, {});
+  ChildParents.associate = function (models) {
+    // associations can be defined here
+    ChildParents.belongsTo(models.Parent, {
+      as: 'parents',
+      foreignKey: "parentId"
+    });
 
+    ChildParents.belongsTo(models.Child, {
+      as: 'children',
+      foreignKey: "childId"
+    });
+
+  };
   return ChildParents;
 };

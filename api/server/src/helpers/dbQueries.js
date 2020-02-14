@@ -21,9 +21,9 @@ export const findAll = async ({
         include,
     });
 
-export const createOne = async ({ model, data = {} }) => {
+export const createOne = async ({ model, data = {}, include = {} }) => {
     try {
-        const create = await model.create(data);
+        const create = await model.create(data, include);
         return create.dataValues
     } catch (error) {
         return {

@@ -15,7 +15,7 @@ users.post(
 );
 
 // user login route
-users.post('/login/user', validateLogin, asyncHandler(UserController.login));
+users.post('/login', validateLogin, asyncHandler(UserController.login));
 
 
 export default users;
