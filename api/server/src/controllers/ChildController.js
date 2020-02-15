@@ -30,8 +30,68 @@ export default class ChildController {
         }
 
         return res.status(status.CREATED).json({
+            message: 'Child created and associated to parent..',
             newChild: newChild,
             childParent: childParent
         });
+    }
+
+
+    /**
+* @description - getAll children with associated children function
+* @param {object} req children request
+* @param {object} res response form server
+*/
+    static async getAll(req, res) {
+        const userId = req.user.id;
+        const getAll = await dbHelper.findAll({
+            model: db.Child, where: { userId }, include: [
+                {
+                    model: db.Parent,
+                    as: 'parents',
+                    attributes: ['id', 'firstName', 'phone'],
+                    through: { attributes: [] }
+                }
+            ]
+        });
+
+        return getAll ?
+            res.status(status.OK).json({
+                message: 'All children with associated Parents..',
+                children: getAll
+            }) :
+            res.status(status.NO_CONTENT).json({
+                message: 'No children found...'
+            });
+    }
+
+    /**
+* @description - getOne child with associated children function
+* @param {object} req child request
+* @param {object} res response form server
+*/
+    static async getOne(req, res) {
+        const userId = req.user.id;
+        const id = req.params.id;
+        const getOne = await dbHelper.findOne({
+            model: db.Child, where: { userId, id }, include: [
+                {
+                    model: db.Parent,
+                    as: 'parents',
+                    attributes: ['id', 'firstName', 'phone'],
+                    through: { attributes: [] }
+                }
+            ]
+        });
+
+        return getOne
+            ? res.status(status.OK).json({
+                message: 'Child with associated Parents..',
+                child: getOne
+            })
+            : res
+                .status(status.NOT_FOUND)
+                .json({ errors: { child: `sorry, child with id ${req.params.id} is not found!!` } });
+
     }
 }

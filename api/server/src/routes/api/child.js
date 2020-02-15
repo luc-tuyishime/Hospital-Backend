@@ -15,5 +15,17 @@ children.post(
     asyncHandler(ChildController.create)
 );
 
+children.get(
+    '/children',
+    verifyToken,
+    asyncHandler(ChildController.getAll)
+);
+
+children.get(
+    '/child/:id',
+    verifyToken,
+    asyncHandler(ChildController.getOne)
+);
+
 
 export default children;
