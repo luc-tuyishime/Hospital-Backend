@@ -17,11 +17,7 @@ export default class ParentController {
         const userId = req.user.id
         const { firstName, lastName, email, phone } = req.body;
         const newParent = await dbHelper.createOne({
-            model: db.Parent, data: { userId, firstName, lastName, email, phone },
-            include: {
-                model: db.Child,
-                as: 'children'
-            }
+            model: db.Parent, data: { userId, firstName, lastName, email, phone }
         });
         const errors = newParent.errors ? helper.checkCreateUpdateErrors(newParent.errors) : null;
 
