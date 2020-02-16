@@ -9,7 +9,7 @@ import * as dbHelper from '../helpers/dbQueries';
  */
 export default class ParentController {
     /**
-   * @param {object} req Request sent to the route
+   * @param {object} Parent req Request sent to the route
    * @param {object} res Response from server
    * @returns {object} Object representing the response returned
    */

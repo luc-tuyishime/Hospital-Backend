@@ -8,11 +8,11 @@ import * as dbHelper from '../helpers/dbQueries';
  * A class to handle actions performed on Users 
  */
 export default class UserController {
+
     /**
-   * @param {object} req Request sent to the route
-   * @param {object} res Response from server
-   * @returns {object} Object representing the response returned
-   */
+     * @param {object} User req Request sent to the route
+     * @returns {object} Object representing the response returned
+     */
     static async create(req, res) {
         const hospitalId = req.hospital.id;
         console.log(hospitalId);
