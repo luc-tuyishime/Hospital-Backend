@@ -9,5 +9,5 @@ export {
     token,
     password,
     sendMail,
-    checkCreateUpdateErrors
+    checkCreateUpdateErrors,
 };

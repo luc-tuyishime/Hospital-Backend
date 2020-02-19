@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import db from '../models';
 import status from '../config/status';
-import * as helper from '../helpers';
 import * as dbHelper from '../helpers/dbQueries';
 
 /**
@@ -60,7 +59,7 @@ export default class ChildController {
                 message: 'All children with associated Parents..',
                 children: getAll
             }) :
-            res.status(status.NO_CONTENT).json({
+            res.status(status.NOT_FOUND).json({
                 message: 'No children found...'
             });
     }
