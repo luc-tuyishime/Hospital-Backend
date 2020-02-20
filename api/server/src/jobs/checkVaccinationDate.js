@@ -25,9 +25,9 @@ const job = cronJob.schedule('*/1 * * * * *', async () => {
         console.log('=======open');
         console.log('child :', child);
         parents.forEach((parent, index) => {
-            const sendMessage = options(dataToBeSent('+250784421255', 'Please... vaccin Hospital', 'Lucas'))
-
+            const sendMessage = options(dataToBeSent('+250784421255', 'iiiii', 'Vaccin hospital'))
             console.log(`parent ${index}:`, parent);
+            console.log('please', sendMessage);
             request(sendMessage, callback);
         })
         console.log('========end');

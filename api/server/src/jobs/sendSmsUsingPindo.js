@@ -1,11 +1,18 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const { PINDO_TOKEN } = process.env;
+
 const options = (body, ...rest) => {
+
     const optionsValues = {
         method: "POST",
         body: body,
         json: true,
         url: "http://api.pindo.io/v1/sms/",
         headers: {
-            Authorization: "Bearer eyJhbGciOiJub25lIn0.eyJpZCI6NDcsInJldm9rZWRfdG9rZW5fY291bnQiOjF9."
+            Authorization: `Bearer ${PINDO_TOKEN}`
         }
     };
     return optionsValues
