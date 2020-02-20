@@ -1,9 +1,11 @@
 import 'dotenv/config';
 import cronJob from 'node-cron';
-
+import request from "request";
 import db from '../models';
 import * as dbHelper from '../helpers/dbQueries';
 import { DAYS_TO_NOTIFY } from '../constants/vaccin';
+import dataToBeSent from './dataToBeSent';
+import { callback, options } from './sendSmsUsingPindo';
 
 const job = cronJob.schedule('*/1 * * * * *', async () => {
     const allVaccins = await dbHelper.findAll({
@@ -17,21 +19,30 @@ const job = cronJob.schedule('*/1 * * * * *', async () => {
 
     allVaccins.forEach(vaccin => {
         const days = DAYS_TO_NOTIFY || moment().diff(vaccin.get().vaccinationDate, 'days');
-        if (days >= (DAYS_TO_NOTIFY - 1) && days <= DAYS_TO_NOTIFY) {
-            const child = vaccin.get().child.get();
-            const parents = child.parents.map(parent => parent.get());
-            console.log('=======open');
-            console.log('child :', child);
-            parents.forEach((parent, index) => {
-                console.log(`parent ${index}:`, parent);
-            })
-            console.log('========end');
-        }
+        // if (days >= (DAYS_TO_NOTIFY - 1) && days <= DAYS_TO_NOTIFY) {
+        const child = vaccin.get().child.get();
+        const parents = child.parents.map(parent => parent.get());
+        console.log('=======open');
+        console.log('child :', child);
+        parents.forEach((parent, index) => {
+            const sendMessage = options(dataToBeSent('+250784421255', 'Please... vaccin Hospital', 'Lucas'))
+
+            console.log(`parent ${index}:`, parent);
+            request(sendMessage, callback);
+        })
+        console.log('========end');
+        // }
     });
+
+
     console.log(`You will see this message every 01 seconds`);
 
 }, null, true, 'America/Los_Angeles');
-// job.start();
+//job.start();
 job.stop();
 
-export default job;
+
+module.exports = {
+    dataToBeSent,
+    job
+};
