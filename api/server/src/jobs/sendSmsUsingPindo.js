@@ -4,7 +4,7 @@ dotenv.config();
 
 const { PINDO_TOKEN } = process.env;
 
-const options = (body, ...rest) => {
+const options = body => {
 
     const optionsValues = {
         method: "POST",
@@ -21,8 +21,10 @@ const options = (body, ...rest) => {
 
 const callback = (error, response, body) => {
     if (!error && response.statusCode == 200) {
-        console.log(body);
+        console.log('success');
     }
+    console.log(response.statusCode);
+    return response;
 }
 //call the request
 
