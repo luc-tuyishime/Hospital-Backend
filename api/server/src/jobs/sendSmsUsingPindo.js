@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const { PINDO_TOKEN } = process.env;
+console.log('YEAHH', PINDO_TOKEN);
 
 const options = body => {
 
@@ -23,7 +24,7 @@ const callback = (error, response, body) => {
     if (!error && response.statusCode == 200) {
         console.log('success');
     }
-    console.log(response.statusCode);
+    console.log('response ==>', response.statusCode);
     return response;
 }
 //call the request

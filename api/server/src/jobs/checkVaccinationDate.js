@@ -19,8 +19,8 @@ const job = cronJob.schedule('*/1 * * * * *', async () => {
     });
 
     allVaccins.forEach(vaccin => {
-        console.log('remanaing days ==>', moment().diff(vaccin.get().vaccinationDate, 'days'));
-        const days = DAYS_TO_NOTIFY || moment().diff(vaccin.get().vaccinationDate, 'days');
+        console.log('voilaaa ==>', vaccin.type, moment().diff(vaccin.get().vaccinationDate, 'days'));
+        const days = moment().diff(vaccin.get().vaccinationDate, 'days');
         if (days >= (DAYS_TO_NOTIFY - 1) && days <= DAYS_TO_NOTIFY2) {
             const child = vaccin.get().child.get();
             const parents = child.parents.map(parent => parent.get());
@@ -29,8 +29,9 @@ const job = cronJob.schedule('*/1 * * * * *', async () => {
             parents.forEach((parent, index) => {
                 const values = options({
                     to: parent.phone,
-                    text: `Hello ${parent.firstName}, your child ${child.firstName} ${child.lastName} will receive his vaccin in ${days} days`,
-                    sender: 'HIhi..'
+                    text: `Hello ${parent.firstName}, your child ${child.firstName} 
+                ${child.lastName} will receive ${vaccin.type} as vaccin in ${days} days`,
+                    sender: '...JL...'
                 });
                 console.log(`parent ${index}:`, parent);
 
