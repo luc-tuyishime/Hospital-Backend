@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const { PINDO_TOKEN } = process.env;
-console.log('YEAHH', PINDO_TOKEN);
 
 const options = body => {
 
