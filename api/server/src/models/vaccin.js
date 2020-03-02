@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    vaccinationDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
     createdAt: {
       type: 'TIMESTAMP',
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
@@ -43,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
   Vaccin.associate = function (models) {
     // associations can be defined here
     Vaccin.belongsTo(models.User, { foreignKey: 'userId' });
-    Vaccin.belongsTo(models.Child, { foreignKey: 'childId' });
+    Vaccin.belongsTo(models.Child, { foreignKey: 'childId', as: 'child' });
   };
   return Vaccin;
 };

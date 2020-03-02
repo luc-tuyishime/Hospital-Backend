@@ -29,6 +29,9 @@ module.exports = {
       type: {
         type: Sequelize.STRING
       },
+      vaccinationDate: {
+        type: Sequelize.DATE
+      },
       createdAt: {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

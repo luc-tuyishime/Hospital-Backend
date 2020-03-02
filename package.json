@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "concurrently \"npm run db:migrate\" \"babel-node ./api/index.js\"",
     "dev": "nodemon --exec babel-node ./api/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:migrate": "./node_modules/.bin/sequelize db:migrate"
   },
   "repository": {
     "type": "git",
@@ -30,10 +32,13 @@
     "babel-loader": "^8.0.6",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cron": "^1.8.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "node-cron": "^2.0.3",
     "path": "^0.12.7",
     "pg": "^7.18.1",
     "pg-hstore": "^2.3.3",

@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import router from './server/src/routes';
+import './server/src/jobs';
+
 
 const app = express();
 app.use(bodyParser.json());
