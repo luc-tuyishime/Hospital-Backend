@@ -26,9 +26,9 @@ export default class AuthController {
 
         return errors
             ? res.status(errors.code).json({ errors: errors.errors })
-            : (await helper.sendMail(email, 'newHospital', { email, name }))
+            : delete newHospital.password && (await helper.sendMail(email, 'newHospital', { email, name }))
             && res.status(status.CREATED).json({
-                message: 'hospital created..',
+                message: 'hospital created. Please create a User',
                 hospital: newHospital,
                 token: helper.token.generate(payload)
             });
