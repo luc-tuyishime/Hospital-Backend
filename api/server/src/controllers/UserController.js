@@ -30,7 +30,7 @@ export default class UserController {
 
         return errors
             ? res.status(errors.code).json({ errors: errors.errors })
-            : res.status(status.CREATED).json({
+            : delete newUser.password && res.status(status.CREATED).json({
                 message: 'user created..',
                 user: newUser
             });
