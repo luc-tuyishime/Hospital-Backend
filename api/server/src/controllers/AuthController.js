@@ -20,18 +20,46 @@ export default class AuthController {
         const newHospital = await dbHelper.createOne({ model: db.Hospital, data: req.body });
         const errors = newHospital.errors ? helper.checkCreateUpdateErrors(newHospital.errors) : null;
 
-        const payload = {
-            id: newHospital.id,
-        };
-
         return errors
             ? res.status(errors.code).json({ errors: errors.errors })
             : delete newHospital.password && (await helper.sendMail(email, 'newHospital', { email, name }))
             && res.status(status.CREATED).json({
-                message: 'hospital created. Please create a User',
-                hospital: newHospital,
+                message: 'hospital created. Please login',
+                hospital: newHospital
+            });
+    }
+
+
+    /**
+   * @description - login user function
+   * @param {object} req user request
+   * @param {object} res  response form server
+   * @returns {object} user token
+   */
+    static async login(req, res) {
+        const { email, password } = req.body;
+        const checkHospital = await dbHelper.findOne({ model: db.Hospital, where: { email } });
+        if (checkHospital) {
+            const comparePassword = helper.password.compare(password, checkHospital.password || '');
+            if (!comparePassword) {
+                return res.status(status.UNAUTHORIZED).json({
+                    errors: { credentials: 'The credentials you provided are incorrect' }
+                });
+            }
+            const payload = {
+                id: checkHospital.id,
+            };
+            delete checkUser.password;
+            return res.status(status.OK).json({
+                message: 'signIn successfully',
+                hospital: checkHospital,
                 token: helper.token.generate(payload)
             });
+        }
+
+        return res.status(status.UNAUTHORIZED).json({
+            errors: { credentials: 'The credentials you provided are incorrect' }
+        });
     }
 
 }
