@@ -31,9 +31,9 @@ export default class AuthController {
 
 
     /**
-   * @description - login user function
-   * @param {object} req user request
-   * @param {object} res  response form server
+   * @description - login hospital function
+   * @param {object} req hospital request
+   * @param {object} res response form server
    * @returns {object} user token
    */
     static async login(req, res) {
@@ -49,7 +49,7 @@ export default class AuthController {
             const payload = {
                 id: checkHospital.id,
             };
-            delete checkUser.password;
+            delete checkHospital.password;
             return res.status(status.OK).json({
                 message: 'signIn successfully',
                 hospital: checkHospital,
