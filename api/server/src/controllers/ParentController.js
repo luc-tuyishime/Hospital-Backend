@@ -24,7 +24,7 @@ export default class ParentController {
         return errors
             ? res.status(errors.code).json({ errors: errors.errors })
             : res.status(status.CREATED).json({
-                message: 'parent created..',
+                message: 'parent created.. please create a child',
                 parent: newParent
             });
     }

@@ -31,10 +31,11 @@ export default class UserController {
         return errors
             ? res.status(errors.code).json({ errors: errors.errors })
             : delete newUser.password && res.status(status.CREATED).json({
-                message: 'user created..',
+                message: 'user created please Login...',
                 user: newUser
             });
     }
+
 
 
     /**

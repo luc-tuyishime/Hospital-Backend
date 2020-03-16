@@ -24,7 +24,7 @@ export default class ChildController {
 
         if (childParent.errors) {
             return res.status(status.NOT_FOUND).json({
-                message: `The parent with id ${parentId} doesn't exist`
+                errors: `The parent with id ${parentId} doesn't exist`
             })
         }
 
