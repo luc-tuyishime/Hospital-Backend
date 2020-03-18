@@ -44,7 +44,7 @@ export default class ParentController {
         return getAll ?
             res.status(status.OK).json({
                 message: 'All Parents..',
-                children: getAll
+                Parents: getAll
             }) :
             res.status(status.NOT_FOUND).json({
                 message: 'No Parents found...'

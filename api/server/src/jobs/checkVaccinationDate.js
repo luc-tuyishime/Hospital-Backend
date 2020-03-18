@@ -8,7 +8,7 @@ import { DAYS_TO_NOTIFY, DAYS_TO_NOTIFY2 } from '../constants/vaccin';
 import { callback, options } from './sendSmsUsingPindo';
 
 
-const job = cronJob.schedule('*/1 * * * * *', async () => {
+const job = cronJob.schedule('0 8 * * * 4', async () => {
     const allVaccins = await dbHelper.findAll({
         model: db.Vaccin,
         include: [{
@@ -19,16 +19,15 @@ const job = cronJob.schedule('*/1 * * * * *', async () => {
     });
 
     allVaccins.forEach(vaccin => {
-        console.log('voilaaa ==>', vaccin.type, moment().diff(vaccin.get().vaccinationDate, 'days'));
         const vaccinDate = vaccin.vaccinationDate;
         const newVaccinDate = moment(vaccinDate).format("dddd, MMMM Do YYYY");
         const days = moment().diff(vaccin.get().vaccinationDate, 'days');
         const absoluteValue = Math.abs(days);
+        const child = vaccin.get().child.get();
+        const parents = child.parents.map(parent => parent.get());
         if (absoluteValue >= (DAYS_TO_NOTIFY - 1) && absoluteValue <= DAYS_TO_NOTIFY) {
-            const child = vaccin.get().child.get();
-            const parents = child.parents.map(parent => parent.get());
             console.log('=======open');
-            console.log('child :', child);
+            console.log('childooooo ===>> :', child.parents);
             parents.forEach((parent, index) => {
                 const values = options({
                     to: parent.phone,
@@ -42,15 +41,23 @@ const job = cronJob.schedule('*/1 * * * * *', async () => {
                 return request(values, callback);
             })
             console.log('========end');
+        } else if (absoluteValue > DAYS_TO_NOTIFY) {
+            parents.forEach((parent, index) => {
+                console.log(`${parent.firstName} will receive a messages three 
+                days and two days before their child ${child.firstName} receives their vaccines`)
+            })
+        } else if (absoluteValue < DAYS_TO_NOTIFY - 1) {
+            console.log('Save vaccinated children');
+        } else {
+            console.log('No children with parents found....');
         }
     });
 
 
     console.log(`You will see this message every 01 seconds`);
 
-}, null, true, 'America/Los_Angeles');
-//job.start();
-job.stop();
-
+}, null, true, 'Africa/Kigali');
+job.start();
+//job.stop();
 
 module.exports = { job };
