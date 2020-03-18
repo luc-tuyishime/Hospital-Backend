@@ -28,4 +28,26 @@ export default class ParentController {
                 parent: newParent
             });
     }
+
+
+    /**
+* @description - getAll Parents
+* @param {object} req children request
+* @param {object} res response form server
+*/
+    static async getAll(req, res) {
+        const userId = req.user.id;
+        const getAll = await dbHelper.findAll({
+            model: db.Parent, where: { userId }
+        });
+
+        return getAll ?
+            res.status(status.OK).json({
+                message: 'All Parents..',
+                children: getAll
+            }) :
+            res.status(status.NOT_FOUND).json({
+                message: 'No Parents found...'
+            });
+    }
 }
