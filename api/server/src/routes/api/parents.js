@@ -6,9 +6,9 @@ import validateParent from '../../middlewares/validations/parent';
 import checkIfAdmin from '../../middlewares/checkIfAdmin';
 import checkNumberComplete from '../../middlewares/checkNumberComplete';
 
-const children = express.Router();
+const parents = express.Router();
 
-children.post(
+parents.post(
     '/parents',
     verifyToken,
     validateParent.create,
@@ -17,5 +17,12 @@ children.post(
     asyncHandler(ParentController.create)
 );
 
+parents.get(
+    '/parents',
+    verifyToken,
+    checkIfAdmin,
+    asyncHandler(ParentController.getAll)
+);
 
-export default children;
+
+export default parents;

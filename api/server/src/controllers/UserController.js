@@ -47,7 +47,7 @@ export default class UserController {
     static async login(req, res) {
         const { email, password } = req.body;
         const checkUser = await dbHelper.findOne({ model: db.User, where: { email } });
-        if (checkUser) {
+        if (Object.keys(checkUser).length > 0) {
             const comparePassword = helper.password.compare(password, checkUser.password || '');
             if (!comparePassword) {
                 return res.status(status.UNAUTHORIZED).json({
@@ -58,11 +58,12 @@ export default class UserController {
                 id: checkUser.id,
                 role: checkUser.role
             };
+            const token = helper.token.generate(payload)
             delete checkUser.password;
             return res.status(status.OK).json({
                 message: 'signIn successfully',
                 user: checkUser,
-                token: helper.token.generate(payload)
+                token
             });
         }
 
