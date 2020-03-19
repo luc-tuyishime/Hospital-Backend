@@ -4,11 +4,12 @@ import moment from 'moment';
 import request from "request";
 import db from '../models';
 import * as dbHelper from '../helpers/dbQueries';
-import { DAYS_TO_NOTIFY, DAYS_TO_NOTIFY2 } from '../constants/vaccin';
+import { DAYS_TO_NOTIFY } from '../constants/vaccin';
 import { callback, options } from './sendSmsUsingPindo';
 
+// */1 * * * * *
 
-const job = cronJob.schedule('0 8 * * * 4', async () => {
+const job = cronJob.schedule('25 23 * * *', async () => {
     const allVaccins = await dbHelper.findAll({
         model: db.Vaccin,
         include: [{
@@ -19,6 +20,7 @@ const job = cronJob.schedule('0 8 * * * 4', async () => {
     });
 
     allVaccins.forEach(vaccin => {
+        console.log(vaccin);
         const vaccinDate = vaccin.vaccinationDate;
         const newVaccinDate = moment(vaccinDate).format("dddd, MMMM Do YYYY");
         const days = moment().diff(vaccin.get().vaccinationDate, 'days');
@@ -57,7 +59,7 @@ const job = cronJob.schedule('0 8 * * * 4', async () => {
     console.log(`You will see this message every 01 seconds`);
 
 }, null, true, 'Africa/Kigali');
-job.start();
-//job.stop();
+//job.start();
+job.stop();
 
 module.exports = { job };
