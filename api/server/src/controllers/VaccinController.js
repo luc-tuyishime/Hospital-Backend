@@ -48,7 +48,7 @@ export default class VaccinController {
         return getAll ?
             res.status(status.OK).json({
                 message: 'All vaccins..',
-                children: getAll
+                vaccines: getAll
             }) :
             res.status(status.NOT_FOUND).json({
                 message: 'No vaccins found...'
