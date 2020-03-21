@@ -93,4 +93,26 @@ export default class ChildController {
                 .json({ errors: { child: `sorry, child with id ${req.params.id} is not found!!` } });
 
     }
+
+
+    /**
+* @description - getAll vaccinated children
+* @param {object} req children request
+* @param {object} res response form server
+*/
+    static async getAllVaccinated(req, res) {
+        const userId = req.user.id;
+        const getAll = await dbHelper.findAll({
+            model: db.SaveChild, where: { userId }
+        });
+
+        return getAll ?
+            res.status(status.OK).json({
+                message: 'All vaccinated children',
+                children: getAll
+            }) :
+            res.status(status.NOT_FOUND).json({
+                message: 'No vaccinated children found...'
+            });
+    }
 }
