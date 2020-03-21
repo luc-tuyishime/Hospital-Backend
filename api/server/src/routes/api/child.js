@@ -22,6 +22,12 @@ children.get(
 );
 
 children.get(
+    '/vaccinated/children',
+    verifyToken,
+    asyncHandler(ChildController.getAllVaccinated)
+);
+
+children.get(
     '/child/:id',
     verifyToken,
     asyncHandler(ChildController.getOne)
