@@ -50,7 +50,8 @@ const job = cronJob.schedule('*/10 * * * * *', async () => {
             console.log('========end');
         } if (moment(date1).isSameOrBefore(date2, 'year')) {
             parents.forEach(async (parent) => {
-                const savedChildren = await SaveChildren.save(child.userId, child.firstName, child.lastName, child.birth, child.sex);
+                const savedChildren = await SaveChildren.save(child.userId, child.firstName, child.lastName,
+                    child.birth, child.sex);
 
                 if (savedChildren.errors) {
                     return console.log('Oops, something went wrong, please try again!')
