@@ -42,7 +42,12 @@ export default class VaccinController {
     static async getAll(req, res) {
         const userId = req.user.id;
         const getAll = await dbHelper.findAll({
-            model: db.Vaccin, where: { userId }
+            model: db.Vaccin, where: { userId },
+            include: [{
+                model: db.Child,
+                as: 'child',
+                include: [{ model: db.Parent, as: 'parents' }]
+            }]
         });
 
         return getAll ?
