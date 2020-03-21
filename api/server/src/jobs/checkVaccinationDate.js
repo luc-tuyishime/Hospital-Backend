@@ -6,10 +6,12 @@ import db from '../models';
 import * as dbHelper from '../helpers/dbQueries';
 import { DAYS_TO_NOTIFY } from '../constants/vaccin';
 import { callback, options } from './sendSmsUsingPindo';
+import { SaveChildren } from '../queries';
 
 // */1 * * * * *
+// 25 23 * * 1-3
 
-const job = cronJob.schedule('25 23 * * *', async () => {
+const job = cronJob.schedule('*/10 * * * * *', async () => {
     const allVaccins = await dbHelper.findAll({
         model: db.Vaccin,
         include: [{
@@ -22,11 +24,14 @@ const job = cronJob.schedule('25 23 * * *', async () => {
     allVaccins.forEach(vaccin => {
         console.log(vaccin);
         const vaccinDate = vaccin.vaccinationDate;
-        const newVaccinDate = moment(vaccinDate).format("dddd, MMMM Do YYYY");
+        const newVaccinDate = moment(vaccinDate).format("DD, YYYY-MM-DD");
         const days = moment().diff(vaccin.get().vaccinationDate, 'days');
         const absoluteValue = Math.abs(days);
         const child = vaccin.get().child.get();
         const parents = child.parents.map(parent => parent.get());
+        const date1 = moment(vaccinDate).format("YYYY-MM-DD");
+        const date2 = moment().format("YYYY-MM-DD");
+        console.log('last', date1, date2);
         if (absoluteValue >= (DAYS_TO_NOTIFY - 1) && absoluteValue <= DAYS_TO_NOTIFY) {
             console.log('=======open');
             console.log('childooooo ===>> :', child.parents);
@@ -43,15 +48,16 @@ const job = cronJob.schedule('25 23 * * *', async () => {
                 return request(values, callback);
             })
             console.log('========end');
-        } else if (absoluteValue > DAYS_TO_NOTIFY) {
-            parents.forEach((parent, index) => {
-                console.log(`${parent.firstName} will receive a messages three 
-                days and two days before their child ${child.firstName} receives their vaccines`)
+        } if (moment(date1).isSameOrBefore(date2, 'year')) {
+            parents.forEach(async (parent) => {
+                const savedChildren = await SaveChildren.save(child.userId, child.firstName, child.lastName, child.birth, child.sex);
+
+                if (savedChildren.errors) {
+                    return console.log('Oops, something went wrong, please try again!')
+                }
+
+                return console.log('Children saved successfully')
             })
-        } else if (absoluteValue < DAYS_TO_NOTIFY - 1) {
-            console.log('Save vaccinated children');
-        } else {
-            console.log('No children with parents found....');
         }
     });
 
