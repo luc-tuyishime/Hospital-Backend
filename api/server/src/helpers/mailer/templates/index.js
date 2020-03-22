@@ -1,5 +1,6 @@
-import newHospital from './newHospital'
+import newHospital from './newHospital';
+import resetPassword from './resetPassword';
 
 export {
-    newHospital
+    newHospital, resetPassword
 }
