@@ -17,5 +17,13 @@ users.post(
 // user login route
 users.post('/login', validateLogin, asyncHandler(UserController.login));
 
+users.post('/forgot/password',
+    asyncHandler(UserController.sendEmail)
+);
+
+users.patch('/reset/password/:token',
+    asyncHandler(UserController.updatePassword)
+);
+
 
 export default users;

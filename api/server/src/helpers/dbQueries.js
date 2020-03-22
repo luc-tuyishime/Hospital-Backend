@@ -37,5 +37,13 @@ export const deleteOne = async ({ model, where }) =>
         where,
     });
 
-export const update = async ({ model, data = {}, where = {} }) =>
-    model.update(data, { where, returning: true });
+export const update = async ({ model, data = {}, where = {} }) => {
+    try {
+        const update = await model.update(data, { where, returning: true });
+        return update[0] ? update[1][0].get() : {};
+    } catch (error) {
+        return {
+            errors: error
+        };
+    }
+}
