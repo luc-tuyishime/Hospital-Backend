@@ -4,7 +4,7 @@ import status from '../config/status';
 import * as dbHelper from '../helpers/dbQueries';
 
 /**
- * A class to handle actions performed on Users 
+ * A class to handle actions performed on Vaccines 
  */
 export default class VaccinController {
 
@@ -35,10 +35,10 @@ export default class VaccinController {
     }
 
     /**
-* @description -vaccin function
-* @param {object} req vaccin request
-* @param {object} res response form server
-*/
+    * @description -vaccin function
+    * @param {object} req vaccin request
+    * @param {object} res response form server
+    */
     static async getAll(req, res) {
         const userId = req.user.id;
         const getAll = await dbHelper.findAll({
@@ -62,10 +62,10 @@ export default class VaccinController {
 
 
     /**
-* @description - getOne vaccin function
-* @param {object} req vaccin request
-* @param {object} res response form server
-*/
+    * @description - getOne vaccin function
+    * @param {object} req vaccin request
+    * @param {object} res response form server
+    */
     static async getOne(req, res) {
         const userId = req.user.id;
         const id = req.params.id;

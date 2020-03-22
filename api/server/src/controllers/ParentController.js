@@ -5,14 +5,15 @@ import * as helper from '../helpers';
 import * as dbHelper from '../helpers/dbQueries';
 
 /**
- * A class to handle actions performed on Users 
+ * A class to handle actions performed on Parents
  */
 export default class ParentController {
+
     /**
-   * @param {object} Parent req Request sent to the route
-   * @param {object} res Response from server
-   * @returns {object} Object representing the response returned
-   */
+     * @param {object} Parent req Request sent to the route
+     * @param {object} res Response from server
+     * @returns {object} Object representing the response returned
+     */
     static async create(req, res) {
         const userId = req.user.id
         const { firstName, lastName, email, phone } = req.body;
@@ -31,10 +32,10 @@ export default class ParentController {
 
 
     /**
-* @description - getAll Parents
-* @param {object} req children request
-* @param {object} res response form server
-*/
+    * @description - getAll Parents
+    * @param {object} req children request
+    * @param {object} res response form server
+    */
     static async getAll(req, res) {
         const userId = req.user.id;
         const getAll = await dbHelper.findAll({
