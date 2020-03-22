@@ -4,7 +4,7 @@ import status from '../config/status';
 import * as dbHelper from '../helpers/dbQueries';
 
 /**
- * A class to handle actions performed on Users 
+ * A class to handle actions performed on Children 
  */
 export default class ChildController {
     /**

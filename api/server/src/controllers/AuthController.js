@@ -8,6 +8,7 @@ import * as dbHelper from '../helpers/dbQueries';
  * A class to handle Hospital local authentication
  */
 export default class AuthController {
+
     /**
      * @description Hospital signup function
      * @param {object} req request from hospital
@@ -31,11 +32,11 @@ export default class AuthController {
 
 
     /**
-   * @description - login hospital function
-   * @param {object} req hospital request
-   * @param {object} res response form server
-   * @returns {object} user token
-   */
+     * @description - login hospital function
+     * @param {object} req hospital request
+     * @param {object} res response form server
+     * @returns {object} user token
+     */
     static async login(req, res) {
         const { email, password } = req.body;
         const checkHospital = await dbHelper.findOne({ model: db.Hospital, where: { email } });

@@ -40,11 +40,11 @@ export default class UserController {
 
 
     /**
-* @description - login user function
-* @param {object} req user request
-* @param {object} res  response form server
-* @returns {object} user token
-*/
+    * @description - login user function
+    * @param {object} req user request
+    * @param {object} res  response form server
+    * @returns {object} user token
+    */
     static async login(req, res) {
         const { email, password } = req.body;
         const checkUser = await dbHelper.findOne({ model: db.User, where: { email } });
@@ -74,10 +74,10 @@ export default class UserController {
     }
 
     /**
-   * @param  {object} req
-   * @param  {object} res
-   * @return {object} return an object containing the confirmation message
-   */
+     * @param  {object} req
+     * @param  {object} res
+     * @return {object} return an object containing the confirmation message
+     */
     static async sendEmail(req, res) {
         const { email } = req.body;
         const result = await dbHelper.findOne({ model: db.User, where: { email } }); // check if the email exist
@@ -99,10 +99,10 @@ export default class UserController {
 
 
     /**
-   * @param  {object} req
-   * @param  {object} res
-   * @return {object} return an object containing the confirmation message
-   */
+     * @param  {object} req
+     * @param  {object} res
+     * @return {object} return an object containing the confirmation message
+     */
     static async updatePassword(req, res) {
         const token = req.body.token || req.params.token;
         const { newPassword, confirmNewPassword } = req.body;
@@ -122,7 +122,10 @@ export default class UserController {
             return res.status(status.BAD_REQUEST).json({ message: isPasswordValid[0] });
         }
         const { email } = helper.token.decode(token);
-        const isUpdated = await dbHelper.update({ model: db.User, data: { password: helper.password.hash(newPassword) }, where: { email } });
+        const isUpdated = await dbHelper.update({
+            model: db.User, data: { password: helper.password.hash(newPassword) },
+            where: { email }
+        });
         delete isUpdated.password;
         return isUpdated
             ? res
