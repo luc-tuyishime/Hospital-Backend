@@ -23,7 +23,7 @@ const callback = (error, response, body) => {
     if (!error && response.statusCode == 200) {
         console.log('success');
     }
-    console.log('response ==>', response.statusCode);
+    console.log('response ==>', response);
     return response;
 }
 //call the request
