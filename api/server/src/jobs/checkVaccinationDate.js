@@ -27,6 +27,7 @@ const job = cronJob.schedule('*/10 * * * * *', async () => {
         const newVaccinDate = moment(vaccinDate).format("DD, YYYY-MM-DD");
         const days = moment().diff(vaccin.get().vaccinationDate, 'days');
         const absoluteValue = Math.abs(days);
+        console.log('oooo', absoluteValue);
         const child = vaccin.get().child.get();
         const parents = child.parents.map(parent => parent.get());
         const date1 = moment(vaccinDate).format("YYYY-MM-DD");
@@ -41,14 +42,14 @@ const job = cronJob.schedule('*/10 * * * * *', async () => {
                     text: `Hello ${parent.firstName}, your child ${child.firstName} 
                     ${child.lastName} will receive ${vaccin.type} as a vaccine on 
                     ${newVaccinDate} which means in ${absoluteValue} days`,
-                    sender: '...JL...'
+                    sender: 'Lorem'
                 });
                 console.log(`parent ${index}:`, parent);
 
                 return request(values, callback);
             })
             console.log('========end');
-        } if (moment(date1).isSameOrBefore(date2, 'year')) {
+        } if (moment(date1).isSameOrBefore(date2, 'day')) {
             parents.forEach(async (parent) => {
                 const savedChildren = await SaveChildren.save(child.userId, child.firstName, child.lastName,
                     child.birth, child.sex);
